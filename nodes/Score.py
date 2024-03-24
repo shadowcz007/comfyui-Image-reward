@@ -22,6 +22,23 @@ def pil2tensor(image):
     return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
 
 
+class ImageBatchToList_:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {"image_batch": ("IMAGE",), }}
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("image_list",)
+    OUTPUT_IS_LIST = (True,)
+    FUNCTION = "run"
+
+    CATEGORY = "♾️Mixlab/Image"
+
+    def run(self, image_batch):
+        images = [image_batch[i:i + 1, ...] for i in range(image_batch.shape[0])]
+        return (images, )
+    
+
 class ImageRewardScoreNode:
     
     def __init__(self):
@@ -68,7 +85,7 @@ class ImageRewardScoreNode:
             ir_model=RM.load(
                 os.path.join(model_path,'ImageReward.pt'),
                 med_config=os.path.join(model_path,'med_config.json'),
-                bert_pretrained_model_name_or_path=os.path.join(model_path,'bert')
+                bert_pretrained_model_name_or_path=os.path.join(model_path,'bert-base-uncased')
                 )
         else:
             ir_model=ir_model.to("cuda" if torch.cuda.is_available() else "cpu")
