@@ -21,7 +21,7 @@ Human preference learning in text-to-image generation. This is a paper for NeurI
 文本到图像生成中的人类偏好学习。这是NeurIPS 2023的一篇论文，训练使用专业的大规模数据集ImageRewardDB：约13.7万个⽐较pairs。
 
 #### install
-install.bat
+requirement.txt
 
 #### models
 
